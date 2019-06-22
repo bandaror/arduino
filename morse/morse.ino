@@ -4,8 +4,8 @@ int led = 5;
 int buzzer = 4;
 int counter = 0;
 int cursorPos =0 ;
-char morseArray[10];
-char dash[1] = {'_'};
+char morseArray[3];
+char dash[1] = {'-'};
 char dot[1] = {'.'};
 int cycle = 0; 
 
@@ -56,7 +56,14 @@ void loop() {
     lcd.print(counter);
     lcd.setCursor(5,1);
     lcd.print(morseArray);
-    cycle ++;
+    if(cycle<4)
+    {
+      cycle = cycle+1;
+    }
+    else
+    {
+      cycle = 0;
+    }
     lcd.setCursor(11,0);
     lcd.print(cycle);
     counter = 0;
