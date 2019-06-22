@@ -4,6 +4,7 @@ int led = 5;
 int buzzer = 4;
 int counter = 0;
 int cursorPos =0 ;
+int morse = [3];
 LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
 
 
@@ -41,6 +42,7 @@ void loop() {
       lcd.setCursor(cursorPos+1,1);
       lcd.print("_");
     }
+    
   }
   else
   {
