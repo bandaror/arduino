@@ -4,7 +4,7 @@ int led = 5;
 int buzzer = 4;
 int counter = 0;
 int cursorPos =0 ;
-char morseArray[3];
+char morseArray[6];
 char dash[1] = {'-'};
 char dot[1] = {'.'};
 int cycle = 0; 
@@ -18,13 +18,16 @@ void setup() {
  pinMode(buzzer, OUTPUT);
  lcd.begin(16, 2);
  lcd.print("Morse code beta");
+ Serial.begin(9600);
+ 
+
 }
 
 
 
 void loop() {
 
-
+  
   while(digitalRead(button)== LOW)
   {
     lcd.clear();
@@ -40,22 +43,27 @@ void loop() {
   }
    if (counter < 40)
     { 
-      morseArray[cycle] = dot[0];
+      morseArray[cycle] = dot[cycle-1];
    
     }
     if(counter >= 40)
     { 
-      morseArray[cycle] = dash[0];
+      morseArray[cycle] = dash[cycle -1];
      
     }
    if(counter > 0)
-   {
+   { 
+    
     digitalWrite(led, LOW);
     digitalWrite(buzzer, LOW);
     lcd.setCursor(0,1);
     lcd.print(counter);
     lcd.setCursor(5,1);
     lcd.print(morseArray);
+    Serial.println("The array and cycle: ");
+    Serial.println(cycle+1);
+    Serial.println(morseArray);
+    
     if(cycle<4)
     {
       cycle = cycle+1;
@@ -63,10 +71,12 @@ void loop() {
     else
     {
       cycle = 0;
+      
     }
     lcd.setCursor(11,0);
     lcd.print(cycle);
     counter = 0;
+   
     
     
    }
