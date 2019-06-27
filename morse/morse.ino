@@ -8,6 +8,10 @@ char morseArray[6];
 char dash[1] = {'-'};
 char dot[1] = {'.'};
 int cycle = 0; 
+struct LM{
+  char l;
+  char m[4];
+};
 
 LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
 
@@ -19,11 +23,12 @@ void setup() {
  lcd.begin(16, 2);
  lcd.print("Morse code beta");
  Serial.begin(9600);
+
  
 
 }
 
-
+//Stream.read("c:/Users/tuba/Documents/GitHub/arduino/morsetext.txt");
 
 void loop() {
 
@@ -37,6 +42,7 @@ void loop() {
     digitalWrite(buzzer, HIGH);
     lcd.setCursor(7,0);
     lcd.print(counter/10);
+    
     counter ++;
     
 
@@ -53,7 +59,8 @@ void loop() {
     }
    if(counter > 0)
    { 
-    
+    LM variable = {'A', ".-"};
+    Serial.println(variable.m);
     digitalWrite(led, LOW);
     digitalWrite(buzzer, LOW);
     lcd.setCursor(0,1);
