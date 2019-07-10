@@ -1,3 +1,4 @@
+//morse code translatot by andras csuri 2019
 #include <LiquidCrystal.h>
 int button = 6;
 int led = 5;
@@ -5,6 +6,7 @@ int buzzer = 4;
 int counter = 0;
 int cursorPos =0 ;
 char morseArray[6];
+char tempArray[6];
 char dash[1] = {'-'};
 char dot[1] = {'.'};
 int cycle = 0;
@@ -52,28 +54,63 @@ void loop() {
 
 
   }
-   if (counter < 40)
+   if (counter < 40) //the short signal
     {
       morseArray[cycle] = dot[cycle-1];
 
     }
-    if(counter >= 40)
+
+    if(counter >= 40 and counter < 150)  //the long signal
     {
       morseArray[cycle] = dash[cycle -1];
 
     }
+
+
+    if(counter >150) //this is when we finish with a letter -holding the button longer than 150ms
+    {
+      for(int i =0; i<=sizeof(morseArray);i++)  // copy the array
+    {
+      (tempArray[i] = morseArray[i]);
+
+    }
+      Serial.println("The morse code is done, the current morse is: ");
+      Serial.println(tempArray);
+
+     for(int i =0; i<=sizeof(morseArray);i++)  // copy the array
+    {
+      (morseArray[i] = 'x');
+
+    }
+
+
+      Serial.println(" ");
+      Serial.println("deleting the morseArray: ");
+      Serial.println(morseArray);
+
+
+     // Serial.println( morseArray);
+      cycle = -1;
+
+
+  LM variable = {'A', "......"};
+    for(int i =0; i<=sizeof(morseArray);i++)
+    {
+      if (variable.m[i] == tempArray[i] or tempArray[i] == 'x')
+      {
+        Serial.println("egyezes");
+      }
+      else
+      {
+        Serial.println("nincs egyezes");
+      }
+    }
+
+      }
    if(counter > 0)
    {
-    LM variable = {'A', ".-"};
-    if(variable.m == morseArray)
-    {
-      Serial.println(variable.l);
-    }
-    else
-    {
-      Serial.println(morseArray);
-      Serial.println(variable.m);
-    }
+
+
     digitalWrite(led, LOW);
     digitalWrite(buzzer, LOW);
     lcd.setCursor(0,1);
@@ -82,6 +119,8 @@ void loop() {
     lcd.print(morseArray);
     Serial.println("The array and cycle: ");
     Serial.println(cycle+1);
+    Serial.println(morseArray);
+
     Serial.println(morseArray);
     //Serial.println(letters);
 
