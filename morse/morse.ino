@@ -1,4 +1,5 @@
 //morse code translatot by andras csuri 2019
+//try strings and find a suitable collection type0
 #include <LiquidCrystal.h>
 int button = 6;
 int led = 5;
@@ -9,7 +10,7 @@ char morseArray[6];
 char tempArray[6];
 char dash[1] = {'-'};
 char dot[1] = {'.'};
-int cycle = 0;
+int cycle = 0;          //to mark a cycle of a letter (can be len 4 max)
 struct LM{
  char l;
  char m[4];
@@ -39,7 +40,7 @@ void setup() {
 
 void loop() {
 
-
+//when the button is pressed the lcd will reset and write " length", lit the led and buzz the buzzer, then mark the actual state of the counter in miliseconds divided by ten (so thenth of seconds), also will increase the counter till the button is pressed
   while(digitalRead(button)== LOW)
   {
     lcd.clear();
@@ -54,20 +55,21 @@ void loop() {
 
 
   }
+  //if the counter is less then 400 miliseconds (40 centiseconds) the array will add a dot at the actual position of the cycle
    if (counter < 40) //the short signal
     {
       morseArray[cycle] = dot[cycle-1];
 
     }
-
+  //if the counter is more than 40 centisecond the array will add a dash to the actual cycle position
     if(counter >= 40 and counter < 150)  //the long signal
     {
       morseArray[cycle] = dash[cycle -1];
 
     }
 
-
-    if(counter >150) //this is when we finish with a letter -holding the button longer than 150ms
+//this is when we finish with a letter(the cycle) -holding the button longer than 150cs, then copy the array to the temparray
+    if(counter >150)
     {
       for(int i =0; i<=sizeof(morseArray);i++)  // copy the array
     {
@@ -77,8 +79,8 @@ void loop() {
       Serial.println("The morse code is done, the current morse is: ");
       Serial.println(tempArray);
 
-     for(int i =0; i<=sizeof(morseArray);i++)  // copy the array
-    {
+ /*    for(int i =0; i<=sizeof(morseArray);i++)  // copy the array
+ //   {
       (morseArray[i] = 'x');
 
     }
@@ -91,7 +93,7 @@ void loop() {
 
      // Serial.println( morseArray);
       cycle = -1;
-
+*/
 
   LM variable = {'A', "......"};
     for(int i =0; i<=sizeof(morseArray);i++)
