@@ -2,7 +2,7 @@
 //we count the amount of time while the button is pressed on the arduino board.
 //depending the length of time counted we either create a dot, or a dash or if it is a very long duration we shut down the sequence.
 //When the sequence is done we compare the gathered dots and dashes with the morse codes and pass the index of the matched morse code to the
-// the abc array. if we use index of the morse code on the index of the abc we should get the corresponding letter.
+// the abc array. if we use index of the morse code on the index of the abc we should get the corresponding letter.   
 #include <LiquidCrystal.h>
 int button = 6;
 int led = 5;
@@ -15,7 +15,7 @@ String dash = "-";
 String dot = ".";
 //int cycle = 0;          //to mark the cycle of a letter (can be len 4 max)
 String abc[] = {"a","b","c","d", "e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
-String morse[] = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",.-..","--","-.", "---", ".--.", "--.-",".-.","...","-","...-",".--","-..-","-.--","--.."};
+String morse[] = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.", "---", ".--.", "--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."};
 //,G  --.,H  ....,I  ..,J  .---,K  -.-,L  .-..,M  --,N  -.,O  ---,P  .--.,Q  --.-,R  .-.,S  ...,T  -,U  ..-,V  ...-,W  .--,X  -..-,Y  -.--,Z  --..";
 LiquidCrystal lcd(7, 8, 9, 10, 11, 12);
 
@@ -82,7 +82,9 @@ void loop() {
       {
         if (morse[i].equals(tempString))
         {
-        Serial.println(abc[i]);
+            Serial.println("The corrseponding letter is:");
+            Serial.println(abc[i]);
+            break;
         }
 
       }
